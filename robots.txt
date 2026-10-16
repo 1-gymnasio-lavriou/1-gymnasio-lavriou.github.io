@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/sitemap.xml
+Sitemap: https://gakoukouvinos-maker.github.io/erasmus/sitemap.xml

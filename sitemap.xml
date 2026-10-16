@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Αντικαταστήστε το https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/ με την πραγματική διεύθυνση. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/#project</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/#timeline</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/#activities</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/#gallery</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/#results</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/#contact</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/#project</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/#timeline</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/#activities</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/#gallery</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/#results</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gakoukouvinos-maker.github.io/erasmus/#contact</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
 </urlset>
