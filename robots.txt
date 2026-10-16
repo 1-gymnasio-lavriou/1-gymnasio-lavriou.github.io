@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ΔΙΕΥΘΥΝΣΗ-ΤΗΣ-ΣΕΛΙΔΑΣ/sitemap.xml
