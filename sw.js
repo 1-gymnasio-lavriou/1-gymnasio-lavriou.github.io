@@ -5,7 +5,7 @@
    κάθε φορά που ανεβάζετε αλλαγμένη σελίδα. Έτσι οι επισκέπτες
    που την έχουν ήδη ανοίξει παίρνουν τη νέα εκδοχή.
    ──────────────────────────────────────────────────────────────── */
-var VERSION = 'erasmus-lavrio-v2';
+var VERSION = 'erasmus-lavrio-v3';
 var SHELL   = VERSION + '-shell';
 var RUNTIME = VERSION + '-runtime';
 
