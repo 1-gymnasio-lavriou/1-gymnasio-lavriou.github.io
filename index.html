@@ -1781,6 +1781,28 @@ const IMPACT = {
   ]
 };
 
+/* ---------- ΤΙ ΔΕΝ ΑΝΑΔΗΜΟΣΙΕΥΟΥΜΕ ----------
+   Οι αναρτήσεις έρχονται αυτούσιες από το site του σχολείου. Ό,τι
+   παράγραφος περιέχει μία από τις παρακάτω φράσεις ΔΕΝ εμφανίζεται εδώ
+   — ούτε στην κάρτα ούτε στο άνοιγμα του άρθρου. Έτσι η σελίδα του
+   έργου μένει χωρίς ονόματα εκπαιδευτικών και χωρίς κριτήρια επιλογής,
+   χωρίς να χρειάζεται αλλαγή στο site του σχολείου.
+   Αφήστε τον πίνακα άδειο [] για να εμφανίζονται όλα.                 */
+const HIDE_PARAS = [
+  "παιδαγωγική ομάδα αποτελείται",
+  "Οικονομική υπεύθυνη",
+  "ακαδημαϊκά κριτήρια",
+  "teaching team:",
+  "Financial officer",
+  "academic grounds"
+];
+function hiddenPara(t){
+  t = String(t || '');
+  return (HIDE_PARAS || []).some(function(p){
+    return p && t.toLowerCase().indexOf(String(p).toLowerCase()) >= 0;
+  });
+}
+
 /* ---------- ΤΙ ΦΕΡΝΟΥΜΕ ΠΙΣΩ ----------
    Μία κάρτα για κάθε προορισμό. Όσο τα title και text είναι άδεια, η
    κάρτα δείχνει την εικόνα του τόπου και μια ένδειξη ότι περιμένει.
@@ -1796,7 +1818,7 @@ const BRING_BACK = {
       title: { el: "", en: "" },
       text:  { el: "", en: "" } },
     { flag: "es", c: "#c47100", art: "es",
-      place: { el: "Μουρθία, Ισπανία", en: "Murcia, Spain" },
+      place: { el: "Μούρθια, Ισπανία", en: "Murcia, Spain" },
       title: { el: "", en: "" },
       text:  { el: "", en: "" } },
     { flag: "de", c: "#8b5cf6", art: "de",
@@ -1889,14 +1911,14 @@ const TIMELINE = [
   },
   {
     from: "2027-03-15", to: "2027-03-20", flag: "es", kind: "trip",
-    place: { el: "Μουρθία, Ισπανία", en: "Murcia, Spain" },
-    title: { el: "Κινητικότητα μαθητών στη Μουρθία", en: "Student mobility to Murcia" },
-    text: { el: "Συνεργασία με το σχολείο-εταίρο στη Μουρθία, με το οποίο εκπονούμε ήδη κοινά περιβαλλοντικά σχέδια μέσω eTwinning.",
+    place: { el: "Μούρθια, Ισπανία", en: "Murcia, Spain" },
+    title: { el: "Κινητικότητα μαθητών στη Μούρθια", en: "Student mobility to Murcia" },
+    text: { el: "Συνεργασία με το σχολείο-εταίρο στη Μούρθια, με το οποίο εκπονούμε ήδη κοινά περιβαλλοντικά σχέδια μέσω eTwinning.",
             en: "Working with our partner school in Murcia, with which we already run joint environmental projects through eTwinning." }
   },
   {
     when: { el: "Θα ανακοινωθεί", en: "To be announced" }, flag: "es", kind: "host",
-    title: { el: "Φιλοξενούμε το σχολείο της Μουρθίας", en: "We host our partner school from Murcia" },
+    title: { el: "Φιλοξενούμε το σχολείο της Μούρθιας", en: "We host our partner school from Murcia" },
     text: { el: "Η επίσκεψη των Ισπανών μαθητών και μαθητριών στο Λαύριο. Οι ημερομηνίες και ο αριθμός των συμμετεχόντων ορίζονται σε συνεννόηση με το σχολείο-εταίρο.",
             en: "The visit of the Spanish students to Lavrio. Dates and numbers are being agreed with our partner school." }
   },
@@ -1974,8 +1996,8 @@ const PARTNERS = [
     text: { el: "Σχολείο στο Haderslev, στη νότια Γιουτλάνδη. Τον Νοέμβριο 2026 δώδεκα παιδιά του έρχονται στο Λαύριο και μένουν σε ελληνικά σπίτια· τον Μάρτιο 2027 κάνουμε εμείς το ίδιο ταξίδι αντίστροφα.",
             en: "A school in Haderslev, in southern Jutland. In November 2026 twelve of their students come to Lavrio and stay with Greek families; in March 2027 we make the same journey the other way round." } },
   { flag: "es", soon: false,
-    name: { el: "Μουρθία, Ισπανία", en: "Murcia, Spain" },
-    text: { el: "Σχολείο στη Μουρθία, στα νοτιοανατολικά της Ισπανίας. Συνεργαζόμαστε ήδη σε δύο κοινά περιβαλλοντικά σχέδια μέσω eTwinning, και τον Μάρτιο 2027 η γνωριμία γίνεται από κοντά.",
+    name: { el: "Μούρθια, Ισπανία", en: "Murcia, Spain" },
+    text: { el: "Σχολείο στη Μούρθια, στα νοτιοανατολικά της Ισπανίας. Συνεργαζόμαστε ήδη σε δύο κοινά περιβαλλοντικά σχέδια μέσω eTwinning, και τον Μάρτιο 2027 η γνωριμία γίνεται από κοντά.",
             en: "A school in Murcia, in south-eastern Spain. We already work together on two joint environmental projects through eTwinning, and in March 2027 we finally meet in person." } },
   { flag: "de", soon: true,
     name: { el: "Γερμανία", en: "Germany" },
@@ -2809,6 +2831,12 @@ function cleanContent(html, site, title){
   };
 
   list('script,style,link,form,input,button,noscript,svg,iframe:not([src])').forEach(function(n){ n.remove(); });
+  /* παράγραφοι που δεν αναδημοσιεύουμε (ονόματα, κριτήρια επιλογής) */
+  list('p,div,li,h2,h3,h4,blockquote').forEach(function(n){
+    if (!n.parentNode) return;
+    if (n.querySelector('img,iframe')) return;
+    if (hiddenPara(n.textContent)) n.remove();
+  });
   list('span').forEach(unwrap);
   list('a').forEach(function(a){
     if (/facebook\.com|instagram\.com|twitter\.com|x\.com/i.test(a.getAttribute('href') || '')) unwrap(a);
@@ -2871,9 +2899,13 @@ function tidyExcerpt(excerptHtml, contentHtml){
   var clean = function(h){
     return stripHtml(h).replace(/https?:\/\/\S+/g, '').replace(/\s+/g, ' ').trim();
   };
-  var t = clean(excerptHtml);
+  var drop = function(txt){
+    var parts = txt.replace(/([.!;·])\s+/g, '$1\u0001').split('\u0001');
+    return parts.filter(function(fr){ return !hiddenPara(fr); }).join(' ').trim();
+  };
+  var t = drop(clean(excerptHtml));
   if (t.length < 30){
-    t = clean(contentHtml);
+    t = drop(clean(contentHtml));
     if (t.length > 190) t = t.slice(0, 190).replace(/\s\S*$/, '') + '…';
   }
   if (!t) t = (lang === 'el' ? 'Δείτε την ανάρτηση.' : 'Open the post.');
@@ -3185,7 +3217,7 @@ function loadFeed(){
 var AIR_PLACES = [
   { lat: 37.71, lon: 24.06, flag: 'gr', name: { el: 'Λαύριο',     en: 'Lavrio'     } },
   { lat: 55.25, lon:  9.49, flag: 'dk', name: { el: 'Haderslev',  en: 'Haderslev'  } },
-  { lat: 37.99, lon: -1.13, flag: 'es', name: { el: 'Μουρθία',    en: 'Murcia'     } },
+  { lat: 37.99, lon: -1.13, flag: 'es', name: { el: 'Μούρθια',    en: 'Murcia'     } },
   { lat: 52.52, lon: 13.40, flag: 'de', name: { el: 'Βερολίνο',   en: 'Berlin'     } },
   { lat: 38.72, lon: -9.14, flag: 'pt', name: { el: 'Λισαβόνα',   en: 'Lisbon'     } }
 ];
