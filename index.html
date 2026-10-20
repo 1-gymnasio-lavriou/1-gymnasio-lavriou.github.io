@@ -789,11 +789,15 @@ h2.rv{overflow:hidden}
   font-size:clamp(1.3rem,2.4vw,1.75rem);margin-bottom:10px;
 }
 .imp > p,.brg > p{color:#b9c6ec;font-size:.98rem;max-width:min(66ch,100%);margin-bottom:26px}
-.imp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.imp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px}
 .imp-card{
   background:rgba(255,255,255,.05);border:1px solid rgba(143,176,255,.2);
   border-radius:var(--radius);clip-path:var(--clip);padding:22px 22px 20px;
+  display:flex;flex-direction:column;
 }
+/* η ετικέτα «σπρώχνει» την μπάρα στο κάτω μέρος, ώστε όλες οι κάρτες
+   της σειράς να έχουν τις μπάρες τους στο ίδιο ύψος */
+.imp-card > span:not(.imp-foot){flex:1 0 auto}
 .imp-card b{
   font-family:var(--display);font-weight:900;font-size:2rem;color:#63d99e;
   display:block;line-height:1.1;font-variant-numeric:tabular-nums;
@@ -803,6 +807,16 @@ h2.rv{overflow:hidden}
 .imp-bar{height:6px;border-radius:99px;background:rgba(143,176,255,.22);margin-top:14px;overflow:hidden}
 .imp-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2fae6f,#63d99e);width:0;transition:width 1.1s var(--ease)}
 .imp-goal{font-size:.74rem;color:#8ea3d6;margin-top:7px;display:block}
+.imp-card .imp-foot{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  margin-top:8px;font-size:.74rem;color:#8ea3d6;
+}
+.imp-card .imp-foot > span{display:inline;margin:0;font-size:.74rem;color:#8ea3d6}
+.imp-foot b{
+  font-family:var(--display);font-weight:800;font-size:.86rem;color:#63d99e;
+  font-variant-numeric:tabular-nums;flex:none;
+}
+.imp-foot b.waiting{color:#6d80b4}
 
 /* ---------- τι φέρνουμε πίσω ---------- */
 .tre{margin-top:56px}
@@ -1801,6 +1815,8 @@ const IMPACT = {
       label: { el: "πλαστικό στην ανακύκλωση", en: "plastic recycled" } },
     { value: 7, target: 80, unit: { el: "κιλά", en: "kg" },
       label: { el: "μπαταρίες και μικροσυσκευές", en: "batteries and small devices" } },
+    { value: 0, target: 60, unit: { el: "", en: "" },
+      label: { el: "δέντρα που φυτεύουμε στην αυλή", en: "trees planted in the schoolyard" } },
     { value: 5, target: 12, unit: { el: "", en: "" },
       label: { el: "τμήματα που συμμετέχουν στις δράσεις", en: "classes taking part" } }
   ]
@@ -2125,6 +2141,7 @@ const STRINGS = {
                 en: "The school's actions in numbers, updated at the end of each term." },
   imp_goal:   { el: "στόχος", en: "target" },
   imp_none:   { el: "χωρίς μέτρηση ακόμα", en: "not measured yet" },
+  imp_pct:    { el: "του στόχου", en: "of the target" },
   h_trees:    { el: "Πέντε δέντρα που ξέρουν τον τόπο", en: "Five trees that know this place" },
   p_trees:    { el: "Δεν διαλέξαμε δέντρα για να ομορφύνει η αυλή. Διαλέξαμε δέντρα που αντέχουν εδώ. Στο Λαύριο φυσάει, το χώμα είναι φτωχό και ο αέρας φέρνει αλάτι από τη θάλασσα· ένα δέντρο που δεν τα αντέχει αυτά δεν προλαβαίνει να μεγαλώσει. Αυτά τα πέντε τα αντέχουν, και το καθένα κάνει και κάτι ακόμα: κρατά το χώμα, ρίχνει σκιά, ταΐζει μέλισσες, κόβει τον αέρα.",
                 en: "We did not choose trees to make the yard prettier. We chose trees that can take this place. Lavrio is windy, the soil is poor and the air carries salt off the sea; a tree that cannot stand that never grows up. These five can, and each one does something more: holds the soil, casts shade, feeds bees, breaks the wind." },
@@ -4531,13 +4548,20 @@ function renderImpact(){
   if (typeof IMPACT === 'undefined' || !IMPACT.show || !IMPACT.items.length){ box.innerHTML = ''; return; }
   var cards = IMPACT.items.map(function(it){
     var unit = T(it.unit) ? ' ' + esc(T(it.unit)) : '';
-    var pct = (it.target && it.value) ? Math.min(100, Math.round(it.value / it.target * 100)) : 0;
+    var pct  = (it.target && it.value) ? Math.min(100, Math.round(it.value / it.target * 100)) : 0;
+    var zero = !it.value;
     return '<div class="imp-card">' +
-      '<b' + (it.value ? '' : ' class="waiting"') + '>' + (it.value ? fnum(it.value) + unit : '—') + '</b>' +
+      '<b' + (zero ? ' class="waiting"' : '') + '>' + fnum(it.value || 0) + unit + '</b>' +
       '<span>' + esc(T(it.label)) + '</span>' +
-      (it.value ? '' : '<span class="imp-goal">' + esc(S('imp_none')) + '</span>') +
-      (it.target ? '<div class="imp-bar"><i data-w="' + pct + '%"></i></div>' +
-                   '<span class="imp-goal">' + esc(S('imp_goal')) + ': ' + fnum(it.target) + unit + '</span>' : '') +
+      (it.target
+        ? '<div class="imp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct +
+          '" aria-label="' + pct + '% ' + esc(S('imp_pct')) + '">' +
+            '<i data-w="' + pct + '%"></i></div>' +
+          '<span class="imp-foot">' +
+            '<span>' + esc(S('imp_goal')) + ': ' + fnum(it.target) + unit + '</span>' +
+            '<b' + (zero ? ' class="waiting"' : '') + '>' + pct + '%</b>' +
+          '</span>'
+        : '') +
       '</div>';
   }).join('');
   box.innerHTML = '<div class="imp rv"><h3>' + esc(S('h_impact')) + '</h3>' +
