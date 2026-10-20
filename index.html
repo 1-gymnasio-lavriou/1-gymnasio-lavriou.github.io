@@ -805,6 +805,23 @@ h2.rv{overflow:hidden}
 .imp-goal{font-size:.74rem;color:#8ea3d6;margin-top:7px;display:block}
 
 /* ---------- τι φέρνουμε πίσω ---------- */
+.tre{margin-top:56px}
+.tre h3{
+  font-family:var(--display);font-weight:800;color:#fff;
+  font-size:clamp(1.3rem,2.4vw,1.75rem);margin-bottom:10px;
+}
+.tre > p{color:#b9c6ec;font-size:.98rem;max-width:min(72ch,100%);margin-bottom:26px}
+.tre-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.tre-card{
+  position:relative;padding:18px 18px 16px;overflow:hidden;
+  background:rgba(99,217,158,.06);border:1px solid rgba(99,217,158,.22);
+  border-radius:var(--radius);clip-path:var(--clip);
+}
+.tre-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#63d99e}
+.tre-card h4{font-family:var(--display);font-weight:800;color:#fff;font-size:1.02rem;margin-bottom:2px}
+.tre-card em{display:block;font-style:italic;font-size:.76rem;color:#8ea3d8;margin-bottom:10px}
+.tre-card p{color:#b9c6ec;font-size:.88rem;line-height:1.6;margin:0}
+.tre-note{margin-top:18px;font-size:.78rem;color:#7e91c5;line-height:1.6;max-width:min(74ch,100%)}
 .brg{margin-top:56px}
 .brg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .brg-card{
@@ -1403,6 +1420,7 @@ body.panels .sec.live .panel-back{display:inline-flex}
     <p class="air-note rv" id="airNote"></p>
 
     <div id="impactBox"></div>
+    <div id="treesBox"></div>
     <div id="bringBox"></div>
 
     <div class="fp rv" id="footprint"></div>
@@ -1746,6 +1764,11 @@ const RESOURCES = [
     desc:  { el: "Αφίσα Α3 για εκτύπωση, με τους προορισμούς και κωδικό QR.",
              en: "A3 poster for printing, with the destinations and a QR code." },
     meta:  { el: "PDF · 1.0 MB", en: "PDF · 1.0 MB" } }
+  ,{ kind: "file", url: "files/afisa-erasmus-A4.pdf",
+    title: { el: "Αφίσα του έργου (Α4)", en: "Project poster (A4)" },
+    desc:  { el: "Η ίδια αφίσα σε Α4, για τους πίνακες ανακοινώσεων και τις τάξεις.",
+             en: "The same poster in A4, for noticeboards and classrooms." },
+    meta:  { el: "PDF · 1.1 MB", en: "PDF · 1.1 MB" } }
   /* παράδειγμα για δικό σας αρχείο:
   ,{ kind: "file", url: "files/senario-mathimatos.pdf",
      title: { el: "Σενάριο μαθήματος: το αποτύπωμα της τάξης μας", en: "Lesson plan: our classroom's footprint" },
@@ -1772,11 +1795,13 @@ const DIARIES = [
 const IMPACT = {
   show: true,
   items: [
-    { value: 0, target: 500, unit: { el: "κιλά", en: "kg" },
+    { value: 50, target: 500, unit: { el: "κιλά", en: "kg" },
       label: { el: "χαρτί στην ανακύκλωση", en: "paper recycled" } },
-    { value: 0, target: 80, unit: { el: "κιλά", en: "kg" },
+    { value: 20, target: 200, unit: { el: "κιλά", en: "kg" },
+      label: { el: "πλαστικό στην ανακύκλωση", en: "plastic recycled" } },
+    { value: 7, target: 80, unit: { el: "κιλά", en: "kg" },
       label: { el: "μπαταρίες και μικροσυσκευές", en: "batteries and small devices" } },
-    { value: 0, target: 12, unit: { el: "", en: "" },
+    { value: 5, target: 12, unit: { el: "", en: "" },
       label: { el: "τμήματα που συμμετέχουν στις δράσεις", en: "classes taking part" } }
   ]
 };
@@ -1802,6 +1827,30 @@ function hiddenPara(t){
     return p && t.toLowerCase().indexOf(String(p).toLowerCase()) >= 0;
   });
 }
+
+/* ---------- ΤΑ ΔΕΝΤΡΑ ΤΗΣ ΑΥΛΗΣ ----------
+   Τα είδη που φυτεύουμε και ο λόγος που διαλέχτηκε το καθένα.
+   Προσθέστε ή αφαιρέστε ελεύθερα· η ενότητα κρύβεται με show: false. */
+const TREES = {
+  show: true,
+  items: [
+    { name: { el: "Χαρουπιά", en: "Carob" }, latin: "Ceratonia siliqua",
+      why: { el: "Το δέντρο της ξηρασίας. Ρίζες που κατεβαίνουν βαθιά για νερό, αντοχή σε φτωχά και πετρώδη χώματα — γι’ αυτό μπαίνει σε αναδασώσεις παραθαλάσσιων περιοχών. Πυκνό φύλλωμα, σκιά όλο τον χρόνο.",
+             en: "The drought tree. Roots that go deep for water, tolerance of poor, stony ground — which is why it is used to reforest coastal land. Dense foliage, shade all year." } },
+    { name: { el: "Αρμυρίκι", en: "Tamarisk" }, latin: "Tamarix",
+      why: { el: "Το δέντρο της ακτής. Αντέχει το αλάτι που φέρνει ο αέρας, εκεί που τα περισσότερα δέντρα καψαλίζονται, και στήνεται στην πρώτη γραμμή για να κόβει τον θαλασσινό άνεμο.",
+             en: "The shoreline tree. It takes the salt the wind carries, where most trees scorch, and stands in the front line to break the sea breeze." } },
+    { name: { el: "Κυπαρίσσι", en: "Cypress" }, latin: "Cupressus sempervirens",
+      why: { el: "Ο ανεμοφράκτης. Στενό, ψηλό και αειθαλές, μπαίνει στη σειρά και προστατεύει ό,τι φυτεύεται πίσω του, χωρίς να κλέβει χώρο από την αυλή.",
+             en: "The windbreak. Narrow, tall and evergreen, it lines up and shelters whatever is planted behind it, without stealing space from the yard." } },
+    { name: { el: "Δάφνη", en: "Bay laurel" }, latin: "Laurus nobilis",
+      why: { el: "Αειθαλής, αντέχει τη σκιά και το κλάδεμα, ανθίζει νωρίς την άνοιξη και ταΐζει τις πρώτες μέλισσες. Και μυρίζει κουζίνα.",
+             en: "Evergreen, it takes shade and pruning, flowers early in spring and feeds the first bees. And it smells of cooking." } },
+    { name: { el: "Ελιά", en: "Olive" }, latin: "Olea europaea",
+      why: { el: "Ζει αιώνες με ελάχιστο νερό. Ό,τι φυτεύει φέτος ένα παιδί της Α΄ Γυμνασίου θα στέκει ακόμα όταν θα φέρνει τα δικά του παιδιά στην αυλή.",
+             en: "It lives for centuries on very little water. What a first-year student plants now will still be standing when they bring their own children to this yard." } }
+  ]
+};
 
 /* ---------- ΤΙ ΦΕΡΝΟΥΜΕ ΠΙΣΩ ----------
    Μία κάρτα για κάθε προορισμό. Όσο τα title και text είναι άδεια, η
@@ -1891,7 +1940,7 @@ const TIMELINE = [
     from: "2026-11-01", to: "2026-11-06", flag: "dk", kind: "host",
     place: { el: "Δανία", en: "Denmark" },
     who: { el: "12 μαθητές και μαθήτριες από το Haderslev", en: "12 students from Haderslev" },
-    title: { el: "Φιλοξενούμε το σχολείο από το Haderslev", en: "We host our partner school from Haderslev" },
+    title: { el: "Φιλοξενούμε το Kløvermarkskolen", en: "We host Kløvermarkskolen" },
     text: { el: "Η ανταλλαγή ξεκινά από το Λαύριο. Οι Δανοί μαθητές και μαθήτριες μένουν σε ελληνικές οικογένειες, μπαίνουν στις τάξεις μας και δουλεύουν μαζί με τα παιδιά μας στις περιβαλλοντικές δράσεις του σχολείου.",
             en: "The exchange begins in Lavrio. The Danish students stay with Greek families, join our classes and work with our students on the school's environmental activities." }
   },
@@ -1913,12 +1962,12 @@ const TIMELINE = [
     from: "2027-03-15", to: "2027-03-20", flag: "es", kind: "trip",
     place: { el: "Μούρθια, Ισπανία", en: "Murcia, Spain" },
     title: { el: "Κινητικότητα μαθητών στη Μούρθια", en: "Student mobility to Murcia" },
-    text: { el: "Συνεργασία με το σχολείο-εταίρο στη Μούρθια, με το οποίο εκπονούμε ήδη κοινά περιβαλλοντικά σχέδια μέσω eTwinning.",
-            en: "Working with our partner school in Murcia, with which we already run joint environmental projects through eTwinning." }
+    text: { el: "Συνεργασία με το IES Sierra de Carrascoy, με το οποίο εκπονούμε ήδη κοινά περιβαλλοντικά σχέδια μέσω eTwinning.",
+            en: "Working with IES Sierra de Carrascoy, with which we already run joint environmental projects through eTwinning." }
   },
   {
     when: { el: "Θα ανακοινωθεί", en: "To be announced" }, flag: "es", kind: "host",
-    title: { el: "Φιλοξενούμε το σχολείο της Μούρθιας", en: "We host our partner school from Murcia" },
+    title: { el: "Φιλοξενούμε το IES Sierra de Carrascoy", en: "We host IES Sierra de Carrascoy" },
     text: { el: "Η επίσκεψη των Ισπανών μαθητών και μαθητριών στο Λαύριο. Οι ημερομηνίες και ο αριθμός των συμμετεχόντων ορίζονται σε συνεννόηση με το σχολείο-εταίρο.",
             en: "The visit of the Spanish students to Lavrio. Dates and numbers are being agreed with our partner school." }
   },
@@ -1933,6 +1982,12 @@ const TIMELINE = [
     title: { el: "Επιμόρφωση εκπαιδευτικών στην Πορτογαλία", en: "Teacher training in Portugal" },
     text: { el: "Δεύτερο επιμορφωτικό πρόγραμμα, συμπληρωματικό του πρώτου, με βιωματικά εργαστήρια και outdoor learning.",
             en: "A second training course, complementary to the first, with hands-on workshops and outdoor learning." }
+  },
+  {
+    when: { el: "Οκτώβριος 2027", en: "October 2027" }, flag: "eu", kind: "event",
+    title: { el: "#ErasmusDays", en: "#ErasmusDays" },
+    text: { el: "Συμμετέχουμε στη διεθνή γιορτή του Erasmus+, που γίνεται κάθε Οκτώβριο σε ολόκληρη την Ευρώπη. Ανοίγουμε το σχολείο και δείχνουμε τι φέραμε πίσω από τα ταξίδια. Οι ακριβείς ημερομηνίες ανακοινώνονται από τη διοργάνωση.",
+            en: "We take part in the international celebration of Erasmus+, held every October across Europe. We open the school and show what we brought back from the mobilities. The exact dates are announced by the organisers." }
   },
   {
     when: { el: "Άνοιξη 2028", en: "Spring 2028" }, flag: "gr", kind: "event",
@@ -1992,13 +2047,13 @@ const PARTNERS = [
     text: { el: "Το σχολείο μας, στο λιμάνι του Λαυρίου, συντονίζει το σχέδιο. Δημόσιο σχολείο με 245 μαθητές και μαθήτριες και αρκετά ευρωπαϊκά προγράμματα στις αποσκευές του.",
             en: "Our school, by the harbour of Lavrio, coordinates the project. A state school with 245 students and a fair few European projects already in its luggage." } },
   { flag: "dk", soon: false,
-    name: { el: "Haderslev, Δανία", en: "Haderslev, Denmark" },
-    text: { el: "Σχολείο στο Haderslev, στη νότια Γιουτλάνδη. Τον Νοέμβριο 2026 δώδεκα παιδιά του έρχονται στο Λαύριο και μένουν σε ελληνικά σπίτια· τον Μάρτιο 2027 κάνουμε εμείς το ίδιο ταξίδι αντίστροφα.",
-            en: "A school in Haderslev, in southern Jutland. In November 2026 twelve of their students come to Lavrio and stay with Greek families; in March 2027 we make the same journey the other way round." } },
+    name: { el: "Kløvermarkskolen — Haderslev, Δανία", en: "Kløvermarkskolen — Haderslev, Denmark" },
+    text: { el: "Δημόσιο σχολείο του δήμου Haderslev, στη νότια Γιουτλάνδη, με τάξεις ως την ένατη. Τον Νοέμβριο 2026 δώδεκα παιδιά του έρχονται στο Λαύριο και μένουν σε ελληνικά σπίτια· τον Μάρτιο 2027 κάνουμε εμείς το ίδιο ταξίδι αντίστροφα.",
+            en: "A state school in the municipality of Haderslev, southern Jutland, with classes up to the ninth grade. In November 2026 twelve of their students come to Lavrio and stay with Greek families; in March 2027 we make the same journey the other way round." } },
   { flag: "es", soon: false,
-    name: { el: "Μούρθια, Ισπανία", en: "Murcia, Spain" },
-    text: { el: "Σχολείο στη Μούρθια, στα νοτιοανατολικά της Ισπανίας. Συνεργαζόμαστε ήδη σε δύο κοινά περιβαλλοντικά σχέδια μέσω eTwinning, και τον Μάρτιο 2027 η γνωριμία γίνεται από κοντά.",
-            en: "A school in Murcia, in south-eastern Spain. We already work together on two joint environmental projects through eTwinning, and in March 2027 we finally meet in person." } },
+    name: { el: "IES Sierra de Carrascoy — El Palmar, Μούρθια", en: "IES Sierra de Carrascoy — El Palmar, Murcia" },
+    text: { el: "Δημόσιο σχολείο στο El Palmar, λίγα χιλιόμετρα έξω από τη Μούρθια, με δίγλωσσο πρόγραμμα στις τάξεις του Γυμνασίου. Συνεργαζόμαστε ήδη σε δύο κοινά περιβαλλοντικά σχέδια μέσω eTwinning, και τον Μάρτιο 2027 η γνωριμία γίνεται από κοντά.",
+            en: "A state school in El Palmar, a few kilometres outside Murcia, with a bilingual programme in the lower secondary years. We already work together on two joint environmental projects through eTwinning, and in March 2027 we finally meet in person." } },
   { flag: "de", soon: true,
     name: { el: "Γερμανία", en: "Germany" },
     text: { el: "Επιμόρφωση των εκπαιδευτικών μας στο project-based learning. Ό,τι μαθαίνουν εκεί γυρίζει στις τάξεις του Λαυρίου, σε όλα τα μαθήματα.",
@@ -2070,6 +2125,11 @@ const STRINGS = {
                 en: "The school's actions in numbers, updated at the end of each term." },
   imp_goal:   { el: "στόχος", en: "target" },
   imp_none:   { el: "χωρίς μέτρηση ακόμα", en: "not measured yet" },
+  h_trees:    { el: "Πέντε δέντρα που ξέρουν τον τόπο", en: "Five trees that know this place" },
+  p_trees:    { el: "Δεν διαλέξαμε δέντρα για να ομορφύνει η αυλή. Διαλέξαμε δέντρα που αντέχουν εδώ. Στο Λαύριο φυσάει, το χώμα είναι φτωχό και ο αέρας φέρνει αλάτι από τη θάλασσα· ένα δέντρο που δεν τα αντέχει αυτά δεν προλαβαίνει να μεγαλώσει. Αυτά τα πέντε τα αντέχουν, και το καθένα κάνει και κάτι ακόμα: κρατά το χώμα, ρίχνει σκιά, ταΐζει μέλισσες, κόβει τον αέρα.",
+                en: "We did not choose trees to make the yard prettier. We chose trees that can take this place. Lavrio is windy, the soil is poor and the air carries salt off the sea; a tree that cannot stand that never grows up. These five can, and each one does something more: holds the soil, casts shade, feeds bees, breaks the wind." },
+  tre_note:   { el: "Είναι όλα μεσογειακά είδη που ζουν μόνα τους στην Αττική. Δεν θέλουν λίπασμα ούτε δίκτυο ποτίσματος: μετά τα δύο πρώτα καλοκαίρια μεγαλώνουν με τη βροχή.",
+                en: "All five are Mediterranean species that live unaided in Attica. No fertiliser, no irrigation system: after the first two summers they grow on rainfall alone." },
   h_bring:    { el: "Τι φέρνουμε πίσω", en: "What we bring home" },
   p_bring:    { el: "Από κάθε προορισμό κρατάμε μια πρακτική και την περνάμε στην καθημερινότητα του σχολείου.",
                 en: "From every destination we keep one practice and bring it into the school's everyday life." },
@@ -4549,6 +4609,20 @@ function brgArt(k){
   return '<svg viewBox="0 0 320 150" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">' +
          g + '</svg>';
 }
+function renderTrees(){
+  var box = document.getElementById('treesBox');
+  if (!box) return;
+  if (typeof TREES === 'undefined' || !TREES.show || !TREES.items.length){ box.innerHTML = ''; return; }
+  var cards = TREES.items.map(function(t){
+    return '<div class="tre-card"><h4>' + esc(T(t.name)) + '</h4>' +
+           (t.latin ? '<em>' + esc(t.latin) + '</em>' : '') +
+           '<p>' + esc(T(t.why)) + '</p></div>';
+  }).join('');
+  box.innerHTML = '<div class="tre rv"><h3>' + esc(S('h_trees')) + '</h3>' +
+                  '<p>' + esc(S('p_trees')) + '</p>' +
+                  '<div class="tre-grid">' + cards + '</div>' +
+                  '<p class="tre-note">' + esc(S('tre_note')) + '</p></div>';
+}
 function renderBring(){
   var box = document.getElementById('bringBox');
   if (!box) return;
@@ -4649,6 +4723,7 @@ function renderAll(){
   renderCountdown();
   renderFilter();
   renderImpact();
+  renderTrees();
   renderBring();
   renderResources();
   renderDiaries();
