@@ -820,22 +820,39 @@ h2.rv{overflow:hidden}
 
 /* ---------- τι φέρνουμε πίσω ---------- */
 .tre{margin-top:56px}
-.tre h3{
+.tre-box{
+  display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:36px;
+  padding:34px 34px 30px;border-radius:var(--radius);clip-path:var(--clip);
+  background:linear-gradient(135deg,rgba(47,174,111,.16),rgba(99,217,158,.05) 55%,rgba(255,255,255,.04));
+  border:1px solid rgba(99,217,158,.26);
+}
+.tre-box h3{
   font-family:var(--display);font-weight:800;color:#fff;
-  font-size:clamp(1.3rem,2.4vw,1.75rem);margin-bottom:10px;
+  font-size:clamp(1.3rem,2.4vw,1.75rem);line-height:1.15;margin-bottom:12px;
 }
-.tre > p{color:#b9c6ec;font-size:.98rem;max-width:min(72ch,100%);margin-bottom:26px}
-.tre-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.tre-card{
-  position:relative;padding:18px 18px 16px;overflow:hidden;
-  background:rgba(99,217,158,.06);border:1px solid rgba(99,217,158,.22);
-  border-radius:var(--radius);clip-path:var(--clip);
+.tre-box > div > p{color:#cfe6d9;font-size:.96rem;line-height:1.7;margin:0}
+.tre-box > div > p.tre-note{
+  margin-top:20px;padding-top:16px;font-size:.82rem;color:#8fbfa6;line-height:1.65;
+  border-top:1px solid rgba(99,217,158,.2);
 }
-.tre-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#63d99e}
-.tre-card h4{font-family:var(--display);font-weight:800;color:#fff;font-size:1.02rem;margin-bottom:2px}
-.tre-card em{display:block;font-style:italic;font-size:.76rem;color:#8ea3d8;margin-bottom:10px}
-.tre-card p{color:#b9c6ec;font-size:.88rem;line-height:1.6;margin:0}
-.tre-note{margin-top:18px;font-size:.78rem;color:#7e91c5;line-height:1.6;max-width:min(74ch,100%)}
+.tre-list{list-style:none;margin:0;padding:0}
+.tre-list li{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:13px 0;border-top:1px solid rgba(99,217,158,.18);
+}
+.tre-list li:first-child{border-top:0;padding-top:0}
+.tre-list li:last-child{padding-bottom:0}
+.tre-ico{flex:none;width:26px;height:26px;color:#63d99e;margin-top:1px}
+.tre-ico svg{display:block;width:100%;height:100%}
+.tre-list h4{
+  font-family:var(--display);font-weight:800;color:#fff;font-size:1rem;
+  margin-bottom:3px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;
+}
+.tre-list h4 em{font-style:italic;font-weight:400;font-size:.76rem;color:#8fbfa6}
+.tre-list p{color:#b9c6ec;font-size:.88rem;line-height:1.6;margin:0}
+@media (max-width:900px){
+  .tre-box{grid-template-columns:minmax(0,1fr);gap:26px;padding:26px 22px 24px}
+}
 .brg{margin-top:56px}
 .brg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .brg-card{
@@ -4637,15 +4654,20 @@ function renderTrees(){
   var box = document.getElementById('treesBox');
   if (!box) return;
   if (typeof TREES === 'undefined' || !TREES.show || !TREES.items.length){ box.innerHTML = ''; return; }
-  var cards = TREES.items.map(function(t){
-    return '<div class="tre-card"><h4>' + esc(T(t.name)) + '</h4>' +
-           (t.latin ? '<em>' + esc(t.latin) + '</em>' : '') +
-           '<p>' + esc(T(t.why)) + '</p></div>';
+  var leaf = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+             '<path d="M20 4c0 8-5 13-13 13H4c0-8 5-13 13-13h3z"/><path d="M4 20c3-5 7-8 12-9"/></svg>';
+  var rows = TREES.items.map(function(t){
+    return '<li><span class="tre-ico">' + leaf + '</span><div>' +
+           '<h4>' + esc(T(t.name)) + (t.latin ? '<em>' + esc(t.latin) + '</em>' : '') + '</h4>' +
+           '<p>' + esc(T(t.why)) + '</p></div></li>';
   }).join('');
-  box.innerHTML = '<div class="tre rv"><h3>' + esc(S('h_trees')) + '</h3>' +
+  box.innerHTML = '<div class="tre rv"><div class="tre-box">' +
+                  '<div><h3>' + esc(S('h_trees')) + '</h3>' +
                   '<p>' + esc(S('p_trees')) + '</p>' +
-                  '<div class="tre-grid">' + cards + '</div>' +
-                  '<p class="tre-note">' + esc(S('tre_note')) + '</p></div>';
+                  '<p class="tre-note">' + esc(S('tre_note')) + '</p></div>' +
+                  '<ul class="tre-list">' + rows + '</ul>' +
+                  '</div></div>';
 }
 function renderBring(){
   var box = document.getElementById('bringBox');
